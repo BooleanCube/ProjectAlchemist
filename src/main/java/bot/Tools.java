@@ -51,7 +51,7 @@ public class Tools {
         ArrayList<Long> bal = new ArrayList<>();
         boolean flag = false;
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\samch\\Desktop\\alchemist\\currency.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\username\\Desktop\\alchemist\\currency.txt"));
             String input;
             while ((input = br.readLine()) != null) {
                 if (input.split(" ")[0].equals(mid)) {
@@ -78,7 +78,7 @@ public class Tools {
         boolean flag = false;
         StringBuilder sb = new StringBuilder();
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\samch\\Desktop\\alchemist\\currency.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\username\\Desktop\\alchemist\\currency.txt"));
             String input;
             while ((input = br.readLine()) != null) {
                 if (input.substring(0, input.indexOf(' ')).equals(mid)) {
@@ -94,7 +94,7 @@ public class Tools {
                 } else sb.append(input).append('\n');
             }
             br.close();
-            FileWriter fw = new FileWriter("C:\\Users\\samch\\Desktop\\alchemist\\currency.txt");
+            FileWriter fw = new FileWriter("C:\\Users\\username\\Desktop\\alchemist\\currency.txt");
             fw.write(sb.toString());
             fw.flush();
         } catch (IOException e) {
@@ -108,14 +108,14 @@ public class Tools {
         String mid = m.getUser().getId();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\samch\\Desktop\\alchemist\\currency.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\username\\Desktop\\alchemist\\currency.txt"));
             StringBuilder sb = new StringBuilder();
             String input;
             while ((input = br.readLine()) != null) {
                 sb.append(input).append('\n');
             }
             br.close();
-            FileWriter fw = new FileWriter("C:\\Users\\samch\\Desktop\\alchemist\\currency.txt");
+            FileWriter fw = new FileWriter("C:\\Users\\username\\Desktop\\alchemist\\currency.txt");
             String text = mid + " 0 " + num + " 100";
             sb.append(text);
             fw.write(sb.toString());
@@ -187,7 +187,7 @@ public class Tools {
         boolean flag = false;
         StringBuilder sb = new StringBuilder();
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\samch\\Desktop\\alchemist\\currency.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\username\\Desktop\\alchemist\\currency.txt"));
             String input;
             while ((input = br.readLine()) != null) {
                 if (input.substring(0, input.indexOf(' ')).equals(mid)) {
@@ -201,7 +201,7 @@ public class Tools {
                 } else sb.append(input).append('\n');
             }
             br.close();
-            FileWriter fw = new FileWriter("C:\\Users\\samch\\Desktop\\alchemist\\currency.txt");
+            FileWriter fw = new FileWriter("C:\\Users\\username\\Desktop\\alchemist\\currency.txt");
             fw.write(sb.toString());
             fw.flush();
         } catch (IOException e) {
@@ -244,7 +244,7 @@ public class Tools {
         boolean flag = false;
         StringBuilder sb = new StringBuilder();
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\samch\\Desktop\\alchemist\\currency.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\username\\Desktop\\alchemist\\currency.txt"));
             String input;
             while ((input = br.readLine()) != null) {
                 if (input.substring(0, input.indexOf(' ')).equals(mid)) {
@@ -257,7 +257,7 @@ public class Tools {
                 } else sb.append(input).append('\n');
             }
             br.close();
-            FileWriter fw = new FileWriter("C:\\Users\\samch\\Desktop\\alchemist\\currency.txt");
+            FileWriter fw = new FileWriter("C:\\Users\\username\\Desktop\\alchemist\\currency.txt");
             fw.write(sb.toString());
             fw.flush();
         } catch (IOException e) {
@@ -299,7 +299,7 @@ public class Tools {
         boolean flag = false;
         StringBuilder sb = new StringBuilder();
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\samch\\Desktop\\alchemist\\currency.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\username\\Desktop\\alchemist\\currency.txt"));
             String input;
             while ((input = br.readLine()) != null) {
                 if (input.substring(0, input.indexOf(' ')).equals(mid)) {
@@ -312,7 +312,7 @@ public class Tools {
                 } else sb.append(input).append('\n');
             }
             br.close();
-            FileWriter fw = new FileWriter("C:\\Users\\samch\\Desktop\\alchemist\\currency.txt");
+            FileWriter fw = new FileWriter("C:\\Users\\username\\Desktop\\alchemist\\currency.txt");
             fw.write(sb.toString());
             fw.flush();
         } catch (IOException e) {
@@ -325,14 +325,14 @@ public class Tools {
     public static void createMemberInv(Member m, String item) {
         String mid = m.getUser().getId();
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\samch\\Desktop\\alchemist\\inventory.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\username\\Desktop\\alchemist\\inventory.txt"));
             StringBuilder sb = new StringBuilder();
             String input;
             while ((input = br.readLine()) != null) {
                 sb.append(input).append('\n');
             }
             br.close();
-            FileWriter fw = new FileWriter("C:\\Users\\samch\\Desktop\\alchemist\\inventory.txt");
+            FileWriter fw = new FileWriter("C:\\Users\\username\\Desktop\\alchemist\\inventory.txt");
             String text = mid + " " + item;
             sb.append(text);
             fw.write(sb.toString());
@@ -346,7 +346,7 @@ public class Tools {
         boolean flag = false;
         StringBuilder sb = new StringBuilder();
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\samch\\Desktop\\alchemist\\inventory.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\username\\Desktop\\alchemist\\inventory.txt"));
             String input;
             while ((input = br.readLine()) != null) {
                 if (input.substring(0, input.indexOf(' ')).equals(mid)) {
@@ -376,7 +376,7 @@ public class Tools {
                 } else sb.append(input).append('\n');
             }
             br.close();
-            FileWriter fw = new FileWriter("C:\\Users\\samch\\Desktop\\alchemist\\inventory.txt");
+            FileWriter fw = new FileWriter("C:\\Users\\username\\Desktop\\alchemist\\inventory.txt");
             fw.write(sb.toString());
             fw.flush();
         } catch (IOException e) {
@@ -391,7 +391,7 @@ public class Tools {
         boolean flag = false;
         StringBuilder sb = new StringBuilder();
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\samch\\Desktop\\alchemist\\inventory.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\username\\Desktop\\alchemist\\inventory.txt"));
             String input;
             while ((input = br.readLine()) != null) {
                 if (input.substring(0, input.indexOf(' ')).equals(mid)) {
@@ -424,7 +424,7 @@ public class Tools {
                 } else sb.append(input).append('\n');
             }
             br.close();
-            FileWriter fw = new FileWriter("C:\\Users\\samch\\Desktop\\alchemist\\inventory.txt");
+            FileWriter fw = new FileWriter("C:\\Users\\username\\Desktop\\alchemist\\inventory.txt");
             fw.write(sb.toString());
             fw.flush();
         } catch (IOException e) {
@@ -440,7 +440,7 @@ public class Tools {
         StringBuilder sb = new StringBuilder();
         List<String> toReturn = new ArrayList<>();
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\samch\\Desktop\\alchemist\\inventory.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\username\\Desktop\\alchemist\\inventory.txt"));
             String input;
             while ((input = br.readLine()) != null) {
                 if (input.substring(0, input.indexOf(' ')).equals(mid)) {
@@ -451,7 +451,7 @@ public class Tools {
                 } else sb.append(input).append('\n');
             }
             br.close();
-            FileWriter fw = new FileWriter("C:\\Users\\samch\\Desktop\\alchemist\\inventory.txt");
+            FileWriter fw = new FileWriter("C:\\Users\\username\\Desktop\\alchemist\\inventory.txt");
             fw.write(sb.toString());
             fw.flush();
         } catch (IOException e) {
