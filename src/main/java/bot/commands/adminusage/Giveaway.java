@@ -1,5 +1,19 @@
 package bot.commands.adminusage;
 
+
+
+
+//This is a WARNING
+//This command is actually against discord TOS because it edits a message every 5 seconds and that is against discord TOS
+
+
+
+
+
+
+
+
+
 import bot.Tools;
 import bot.objects.ICommand;
 import net.dv8tion.jda.api.entities.Message;
