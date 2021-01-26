@@ -63,7 +63,10 @@ public class tempmute implements ICommand {
             }
             Role muted = event.getGuild().getRolesByName("Muted", true).get(0);
             int mutedposition = muted.getPositionRaw() - 1;
-            int move = toMute.getRoles().get(0).getPositionRaw() - 1;
+            int move = 0;
+            if(!toMute.getRoles().isEmpty()) {
+                move = toMute.getRoles().get(0).getPositionRaw() - 1;
+            }
             if(mutedposition < move) {
                 event.getGuild().modifyRolePositions().selectPosition(mutedposition).moveTo(move).queue();
             }

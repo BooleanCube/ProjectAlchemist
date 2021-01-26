@@ -32,6 +32,7 @@ public class search implements ICommand {
                 if (more) {
                     int random = ((int) (Math.random() * 100) % 30) + 1;
                     event.getChannel().sendMessage("You found **" + random + " gold** " + locations[loc]).queue();
+                    Tools.addGold(event.getMember(), random);
                 } else {
                     event.getChannel().sendMessage("You had no luck finding any coins!").queue();
                 }

@@ -38,7 +38,7 @@ public class gamble implements ICommand {
                     event.getChannel().sendMessage("You can't gamble for more than you already have in your chest!").queue();
                     return;
                 }
-                int alcran = ((int)(Math.random()*1000) % 7) + 6;
+                int alcran = ((int)(Math.random()*1000) % 10) + 3;
                 int memran = ((int)(Math.random()*1000) % 11) + 2;
                 if(memran == alcran) {
                     if(alcran == 12) {

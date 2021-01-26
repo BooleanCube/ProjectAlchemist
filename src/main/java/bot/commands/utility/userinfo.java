@@ -29,13 +29,20 @@ public class userinfo implements ICommand {
             for(Role role : m.getRoles()) {
                 roles += "`" + role.getName() + "`, ";
             }
-            roles = roles.substring(0, roles.length()-2);
+            if(!roles.isEmpty()) {
+                roles = roles.substring(0, roles.length()-2);
+            }
             //Joined, Registered, Image, Roles
             e.setImage(url);
             e.addField("Join date: ", join, true);
             e.addField("Registration date: ", register, true);
-            e.addField("Roles: ", roles, true);
-            event.getChannel().sendMessage(e.build()).queue();
+            if(roles.length() > 500) {
+                e.addField("Roles: ", "Too many roles!", true);
+                event.getChannel().sendMessage(e.build()).queue();
+            } else {
+                e.addField("Roles: ", roles, true);
+                event.getChannel().sendMessage(e.build()).queue();
+            }
         } else if(args.size() == 1) {
             Member m = event.getMessage().getMentionedMembers().get(0);
             EmbedBuilder e = new EmbedBuilder();
@@ -56,8 +63,13 @@ public class userinfo implements ICommand {
             e.setImage(url);
             e.addField("Join date: ", join, true);
             e.addField("Registration date: ", register, true);
-            e.addField("Roles: ", roles, true);
-            event.getChannel().sendMessage(e.build()).queue();
+            if(roles.length() > 500) {
+                e.addField("Roles: ", "Too many roles!", true);
+                event.getChannel().sendMessage(e.build()).queue();
+            } else {
+                e.addField("Roles: ", roles, true);
+                event.getChannel().sendMessage(e.build()).queue();
+            }
         } else {
             event.getChannel().sendMessage("Wrong Command Usage:\n" + getHelp()).queue();
             return;

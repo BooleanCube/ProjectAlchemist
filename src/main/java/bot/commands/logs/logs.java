@@ -1,9 +1,9 @@
 package bot.commands.logs;
 
+import bot.Tools;
+////import bot.commands.databases.CustomizableDatabaseManager;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Category;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.channel.category.CategoryCreateEvent;
 import net.dv8tion.jda.api.events.channel.category.CategoryDeleteEvent;
 import net.dv8tion.jda.api.events.channel.text.TextChannelCreateEvent;
@@ -14,18 +14,84 @@ import net.dv8tion.jda.api.events.emote.EmoteAddedEvent;
 import net.dv8tion.jda.api.events.emote.EmoteRemovedEvent;
 import net.dv8tion.jda.api.events.guild.GuildBanEvent;
 import net.dv8tion.jda.api.events.guild.GuildUnbanEvent;
+import net.dv8tion.jda.api.events.guild.invite.GuildInviteCreateEvent;
+import net.dv8tion.jda.api.events.guild.invite.GuildInviteDeleteEvent;
 import net.dv8tion.jda.api.events.guild.member.*;
 import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateNicknameEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.role.RoleCreateEvent;
 import net.dv8tion.jda.api.events.role.RoleDeleteEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
+import java.io.IOException;
 
 public class logs extends ListenerAdapter {
 
     public static boolean logs = true;
+
+
+    @Override
+    public void onGuildInviteCreate(@Nonnull GuildInviteCreateEvent event) {
+        if(event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
+            return;
+        }
+        try {
+            if(!Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSon")) {
+                return;
+            }
+        } catch (IOException e) {
+            
+        }
+        TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
+        EmbedBuilder e = new EmbedBuilder();
+        e.setColor(Color.GREEN);
+        e.setTitle("A new invite was created in " + event.getGuild().getName());
+        e.setDescription("Link: " + event.getInvite().getUrl() + "\nCode: " + event.getInvite().getCode());
+        tc.sendMessage(e.build()).queue();
+    }
+
+    @Override
+    public void onGuildInviteDelete(@Nonnull GuildInviteDeleteEvent event) {
+        if(event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
+            return;
+        }
+        try {
+            if(!Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSon")) {
+                return;
+            }
+        } catch (IOException e) {
+            
+        }
+        TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
+        EmbedBuilder e = new EmbedBuilder();
+        e.setColor(Color.RED);
+        e.setTitle("An invite was deleted/has expired in " + event.getGuild().getName());
+        e.setDescription("Link: " + event.getUrl() + "\nCode: " + event.getCode());
+        tc.sendMessage(e.build()).queue();
+    }
+
+    @Override
+    public void onGuildMessageDelete(@Nonnull GuildMessageDeleteEvent event) {
+        if(event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
+            return;
+        }
+
+        try {
+            if(!Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSon")) {
+                return;
+            }
+        } catch (IOException e) {
+            
+        }
+        TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
+        EmbedBuilder e = new EmbedBuilder();
+        e.setColor(Color.RED);
+        e.setTitle("Message Delete!");
+        tc.sendMessage(e.build()).queue();
+    }
 
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
@@ -49,8 +115,12 @@ public class logs extends ListenerAdapter {
                 }
             }
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
@@ -83,8 +153,12 @@ public class logs extends ListenerAdapter {
                 }
             }
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
@@ -108,8 +182,12 @@ public class logs extends ListenerAdapter {
                 }
             }
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
@@ -133,8 +211,12 @@ public class logs extends ListenerAdapter {
                 }
             }
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
@@ -149,12 +231,16 @@ public class logs extends ListenerAdapter {
         if(event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
             return;
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
-        e.setColor(Color.GREEN);
+        e.setColor(event.getRole().getColor());
         e.setTitle(event.getRole().getName() + " role was just created in " + event.getGuild().getName());
         e.setDescription(event.getRole().getName() + " was created on " + event.getRole().getTimeCreated());
         tc.sendMessage(e.build()).queue();
@@ -165,12 +251,16 @@ public class logs extends ListenerAdapter {
         if(event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
             return;
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
-        e.setColor(Color.RED);
+        e.setColor(event.getRole().getColor());
         e.setTitle(event.getRole().getName() + " role was just deleted in " + event.getGuild().getName());
         e.setDescription(event.getRole().getName() + " was deleted on " + event.getRole().getTimeCreated());
         tc.sendMessage(e.build()).queue();
@@ -190,8 +280,12 @@ public class logs extends ListenerAdapter {
                 }
             }
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
@@ -215,8 +309,12 @@ public class logs extends ListenerAdapter {
                 }
             }
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
@@ -231,8 +329,12 @@ public class logs extends ListenerAdapter {
         if(event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
             return;
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
@@ -248,8 +350,12 @@ public class logs extends ListenerAdapter {
         if(event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
             return;
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
@@ -261,36 +367,23 @@ public class logs extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildBan(GuildBanEvent event) {
-        if(event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
-            return;
-        }
-        if(logs == false) {
-            return;
-        }
-        TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
-        EmbedBuilder e = new EmbedBuilder();
-        e.setColor(Color.RED);
-        e.setTitle("`" + event.getUser().getName() + "` was banned from " + event.getGuild().getName());
-        e.setDescription(event.getUser().getName() + " was banned!");
-        e.setImage(event.getUser().getAvatarUrl());
-        tc.sendMessage(e.build()).queue();
-    }
-
-    @Override
     public void onGuildUnban(GuildUnbanEvent event) {
         if(event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
             return;
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
-        EmbedBuilder e = new EmbedBuilder();
-        e.setColor(Color.GREEN);
-        e.setTitle("`" + event.getUser().getName() + "` was unbanned from " + event.getGuild().getName());
-        e.setDescription(event.getUser().getName() + " was unbanned!");
-        e.setImage(event.getUser().getAvatarUrl());
+        User target = event.getUser();
+        EmbedBuilder e = new EmbedBuilder()
+                .setTitle("[UNBAN] " + target.getName())
+                .addField("Unbanned Member:", target.getName(), true)
+                .setAuthor(target.getName(), target.getAvatarUrl(), target.getEffectiveAvatarUrl());
         tc.sendMessage(e.build()).queue();
     }
 
@@ -299,8 +392,12 @@ public class logs extends ListenerAdapter {
         if(event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
             return;
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
@@ -317,8 +414,12 @@ public class logs extends ListenerAdapter {
         if(event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
             return;
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
@@ -333,8 +434,12 @@ public class logs extends ListenerAdapter {
         if(event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
             return;
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
@@ -358,8 +463,12 @@ public class logs extends ListenerAdapter {
                 }
             }
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();
@@ -383,8 +492,12 @@ public class logs extends ListenerAdapter {
                 }
             }
         }
-        if(logs == false) {
-            return;
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException e) {
+            
         }
         TextChannel tc = event.getGuild().getTextChannelsByName("logs", true).get(0);
         EmbedBuilder e = new EmbedBuilder();

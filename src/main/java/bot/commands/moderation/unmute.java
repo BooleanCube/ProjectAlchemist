@@ -42,7 +42,7 @@ public class unmute implements ICommand {
             event.getGuild().removeRoleFromMember(toMute, muted).queue();
             EmbedBuilder e = new EmbedBuilder()
                     .setTitle("[UNMUTE] " + toMute.getEffectiveName())
-                    .addField("Muted Member:", toMute.getEffectiveName(), true)
+                    .addField("Unmuted Member:", toMute.getEffectiveName(), true)
                     .addField("Moderator:", event.getMember().getEffectiveName(), true)
                     .setAuthor(toMute.getUser().getName(), toMute.getUser().getAvatarUrl(), toMute.getUser().getEffectiveAvatarUrl());
             event.getChannel().sendMessage(e.build()).queue();

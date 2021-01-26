@@ -1,45 +1,75 @@
 package bot.commands.moderation;
 
+import bot.Constants;
 import bot.objects.ICommand;
-import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class unban implements ICommand {
     @Override
     public void handle(List<String> args, GuildMessageReceivedEvent event) {
+
         TextChannel channel = event.getChannel();
-        Member member = event.getMember();
-        Member selfMember = event.getGuild().getSelfMember();
-        List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
-        if (args.isEmpty() || mentionedMembers.isEmpty()) {
-            channel.sendMessage("Missing arguments").queue();
+
+        if (!event.getMember().hasPermission(Permission.BAN_MEMBERS)) {
+            channel.sendMessage("You need the Ban Members permission to use this command.").queue();
             return;
         }
-        Member target = mentionedMembers.get(0);
-        if (!member.hasPermission(Permission.BAN_MEMBERS) || !member.canInteract(target)) {
-            channel.sendMessage("You don't have permission to use this command").queue();
+
+        if (!event.getGuild().getSelfMember().hasPermission(Permission.BAN_MEMBERS)) {
+            channel.sendMessage("I need the Ban Members permission to unban members.").queue();
             return;
         }
-        if (!selfMember.hasPermission(Permission.BAN_MEMBERS) || !selfMember.canInteract(target)) {
-            channel.sendMessage("I can't unban that user or I don't have the ban members permission").queue();
+
+        if (args.isEmpty()) {
+            channel.sendMessage("Usage: `" + Constants.PREFIX + getInvoke() + " <username/user id/username#disc>`").queue();
             return;
         }
-        event.getGuild().unban(target.getUser()).queue();
-        channel.sendMessage("Success!").queue();
+
+        String argsJoined = String.join(" ", args);
+
+        event.getGuild().retrieveBanList().queue((bans) -> {
+
+            List<User> goodUsers = bans.stream().filter((ban) -> isCorrectUser(ban, argsJoined))
+                    .map(Guild.Ban::getUser).collect(Collectors.toList());
+
+            if (goodUsers.isEmpty()) {
+                channel.sendMessage("This user is not banned").queue();
+                return;
+            }
+
+            User target = goodUsers.get(0);
+
+            String mod = String.format("%#s", event.getAuthor());
+            String bannedUser = String.format("%#s", target);
+
+            event.getGuild().unban(target).queue();
+
+            channel.sendMessage("User " + bannedUser + " unbanned.").queue();
+
+        });
     }
 
     @Override
     public String getHelp() {
-        return "Unbans a user from the server. Note: Mention the user!\n" +
-                "Usage: `a!unban [user]`";
+        return "Unbans a member from the server\n" +
+                "Usage: `" + Constants.PREFIX + getInvoke() + " [username/user id]";
     }
 
     @Override
     public String getInvoke() {
         return "unban";
+    }
+
+    private boolean isCorrectUser(Guild.Ban ban, String arg) {
+        User bannedUser = ban.getUser();
+
+        return bannedUser.getName().equalsIgnoreCase(arg) || bannedUser.getId().equals(arg)
+                || String.format("%#s", bannedUser).equalsIgnoreCase(arg);
     }
 }

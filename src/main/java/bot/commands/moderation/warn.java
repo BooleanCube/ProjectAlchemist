@@ -1,11 +1,14 @@
 package bot.commands.moderation;
 
 import bot.Tools;
+//import bot.commands.databases.CustomizableDatabaseManager;
+import bot.commands.logs.logs;
 import bot.objects.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
+import java.io.IOException;
 import java.util.List;
 
 public class warn implements ICommand {
@@ -31,6 +34,16 @@ public class warn implements ICommand {
                 }
                 e.setFooter(warned.getUser().getName() + " has " + Tools.getInfractions(warned) + " infractions", warned.getUser().getAvatarUrl());
                 event.getChannel().sendMessage(e.build()).queue();
+                try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+                if(!event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
+                    event.getGuild().getTextChannelsByName("logs", true).get(0).sendMessage(e.build()).queue();
+                }
             }
         } else {
             event.getChannel().sendMessage("You don't have enough perms for this command!").queue();

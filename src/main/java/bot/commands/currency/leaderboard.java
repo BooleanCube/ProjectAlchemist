@@ -35,7 +35,7 @@ public class leaderboard implements ICommand {
             }
         }
         EmbedBuilder e = new EmbedBuilder();
-        e.setTitle(event.getGuild().getName() + "'s leaderboard");
+        e.setTitle(event.getGuild().getName() + "'s currency leaderboard");
         e.setDescription("");
         Collections.sort(banks);
         String[] emojis = {"\uD83E\uDD47", "\uD83E\uDD48", "\uD83E\uDD49"};

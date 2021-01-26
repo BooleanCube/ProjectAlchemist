@@ -35,6 +35,14 @@ public class fight implements ICommand {
                     delay.remove(event.getAuthor().getIdLong());
                 }
                 delay.put(event.getAuthor().getIdLong(), System.currentTimeMillis());
+                int bots = 0;
+                for(Member m:event.getGuild().getMembers()) {
+                    if(m.getUser().isBot()) bots++;
+                }
+                if(event.getGuild().getMembers().size()-bots==1) {
+                    event.getChannel().sendMessage("You are the only human in this lonely server.").queue();
+                    return;
+                }
                 Member m = event.getGuild().getMembers().get(((int) (Math.random() * 100000000) % event.getGuild().getMembers().size()));
                 while (m.getUser().isBot() || m.getUser().getIdLong() == event.getMember().getIdLong()) {
                     m = event.getGuild().getMembers().get(((int) (Math.random() * 1000000000) % event.getGuild().getMembers().size()));

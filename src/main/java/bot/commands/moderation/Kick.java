@@ -1,12 +1,17 @@
 package bot.commands.moderation;
 
 import bot.Constants;
+import bot.Tools;
+//import bot.commands.databases.CustomizableDatabaseManager;
+import bot.commands.logs.logs;
 import bot.objects.ICommand;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Kick implements ICommand {
@@ -41,7 +46,23 @@ public class Kick implements ICommand {
         event.getGuild().kick(target, String.format("Kick by: %#s, with reason: %s",
                 event.getAuthor(), reason)).queue();
 
-        channel.sendMessage("Success!").queue();
+        EmbedBuilder e = new EmbedBuilder()
+                .setTitle("[KICK] " + target.getEffectiveName())
+                .addField("Kicked Member:", target.getEffectiveName(), true)
+                .addField("Moderator:", event.getMember().getEffectiveName(), true)
+                .addField("Reason:", reason, true)
+                .setAuthor(target.getUser().getName(), target.getUser().getAvatarUrl(), target.getUser().getEffectiveAvatarUrl());
+        event.getChannel().sendMessage(e.build()).queue();
+        try {
+            if(Tools.getLogsType(event.getGuild().getIdLong()).equals("LOGSoff")) {
+                return;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        if(!event.getGuild().getTextChannelsByName("logs", true).isEmpty()) {
+            event.getGuild().getTextChannelsByName("logs", true).get(0).sendMessage(e.build()).queue();
+        }
 
     }
 

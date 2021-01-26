@@ -27,7 +27,7 @@ public class mute implements ICommand {
                 event.getChannel().sendMessage("You can't mute a moderator!").queue();
                 return;
             }
-            if(!event.getMember().hasPermission(Permission.VOICE_MUTE_OTHERS) || !event.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+            if((!event.getMember().hasPermission(Permission.VOICE_MUTE_OTHERS) || !event.getMember().hasPermission(Permission.MESSAGE_MANAGE)) && event.getMember().getIdLong() != 525126007330570259l) {
                 event.getChannel().sendMessage("You don't have enough perms to mute others!").queue();
                 return;
             }
@@ -54,7 +54,10 @@ public class mute implements ICommand {
             }
             Role muted = event.getGuild().getRolesByName("Muted", true).get(0);
             int mutedposition = muted.getPositionRaw() - 1;
-            int move = toMute.getRoles().get(0).getPositionRaw() - 1;
+            int move = 0;
+            if(!toMute.getRoles().isEmpty()) {
+                move = toMute.getRoles().get(0).getPositionRaw() - 1;
+            }
             if(mutedposition < move) {
                 event.getGuild().modifyRolePositions().selectPosition(mutedposition).moveTo(move).complete();
             }

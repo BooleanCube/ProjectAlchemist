@@ -2,7 +2,6 @@ package bot.commands.utility;
 
 import bot.objects.ICommand;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-
 import java.util.List;
 
 public class choose implements ICommand {
@@ -12,7 +11,11 @@ public class choose implements ICommand {
             event.getChannel().sendMessage("Please give me some arguments to choose from!").queue();
             return;
         } else {
-            int random = (int)(Math.random()*1000000000000000l) % args.size();
+            if(!event.getMessage().getMentionedMembers().isEmpty() || event.getMessage().mentionsEveryone() || !event.getMessage().getMentionedRoles().isEmpty()) {
+                event.getChannel().sendMessage("Please do not ping members, servers or roles in the choose utility!").queue();
+                return;
+            }
+            int random = (int)(Math.random()*args.size() );
             event.getChannel().sendMessage(args.get(random)).queue();
         }
     }
