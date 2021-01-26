@@ -20,7 +20,7 @@ public class Main {
         try {
             logger.info("Booting...");
             new DefaultShardManagerBuilder()
-                    .setToken("NjgzNTEwODcwNDU4MTA1ODk2.XmVehA.gO4ibsepId4U9setLPAds-7Sa7M")
+                    .setToken("TOKEN")
                     .setShardsTotal(2)
                     .addEventListeners(listener)
                     .addEventListeners(new logs())
