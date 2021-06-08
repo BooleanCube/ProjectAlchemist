@@ -8,7 +8,6 @@ Good luck and I hope you enjoy discord bot development!
 
 
 Discord Server: https://discord.gg/3ZDpPyR
-Youtube Channel: https://www.youtube.com/channel/UCsivrachJyFVLi7V60lrd6g
 
 
 ### Made by BooleanCube#4690
