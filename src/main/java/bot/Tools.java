@@ -1,6 +1,6 @@
 package bot;
 
-//These programs are run on an ubuntu server so the file directories might be a bit weird.
+//These programs are run on an linux based server so the file directories might be a bit weird.
 
 
 
